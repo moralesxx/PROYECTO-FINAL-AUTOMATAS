@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Estilos.css">
+    <title> Máquina de turing </title>
+    <!--Defino como se vera mi GUI-->
+</head>
+
+<body>
+<div class="container">
+        <h1>Simulador de Máquina de Turing</h1>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <div class="tab-button active" onclick="cambiarPestaña(0)">Configuración</div>
+                <div class="tab-button" onclick="cambiarPestaña(1)">Transiciones</div>
+                <div class="tab-button" onclick="cambiarPestaña(2)">Simulación</div>
+            </div>
+            
+            <div class="tab-content active" id="tab0">
+                <div class="panel">
+                    <div class="panel-title">Estados</div>
+                    <div class="form-group">
+                        <label for="estados">Estados (separados por coma):</label>
+                        <input type="text" id="estados" placeholder="q0, q1, q2, q3">
+                    </div>
+                    <div class="form-group">
+                        <label for="estadoInicial">Estado inicial:</label>
+                        <input type="text" id="estadoInicial" placeholder="q0">
+                    </div>
+                    <div class="form-group">
+                        <label for="estadosAceptacion">Estados de aceptación (separados por coma):</label>
+                        <input type="text" id="estadosAceptacion" placeholder="q3">
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-title">Alfabetos</div>
+                    <div class="form-group">
+                        <label for="alfabetoEntrada">Alfabeto de entrada (separados por coma):</label>
+                        <input type="text" id="alfabetoEntrada" placeholder="0, 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="alfabetoCinta">Alfabeto de cinta (separados por coma):</label>
+                        <input type="text" id="alfabetoCinta" placeholder="0, 1, X, Y, B">
+                    </div>
+                    <div class="form-group">
+                        <label for="simboloBlanco">Símbolo blanco:</label>
+                        <input type="text" id="simboloBlanco" value="B" maxlength="1">
+                    </div>
+                </div>
+                
+                <button onclick="guardarConfiguracion()">Guardar Configuración</button>
+                <button onclick="limpiarConfiguracion()">🧹 Limpiar Configuración</button>
+
+            </div>
+            
+            <div class="tab-content" id="tab1">
+                <div class="panel">
+                    <div class="panel-title">Definir Transiciones</div>
+                    <div class="form-group">
+                        <label for="transEstado">Estado actual:</label>
+                        <input type="text" id="transEstado" placeholder="q0">
+                    </div>
+                    <div class="form-group">
+                        <label for="transLeer">Símbolo a leer:</label>
+                        <input type="text" id="transLeer" placeholder="0" maxlength="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="transNuevoEstado">Nuevo estado:</label>
+                        <input type="text" id="transNuevoEstado" placeholder="q1">
+                    </div>
+                    <div class="form-group">
+                        <label for="transEscribir">Símbolo a escribir:</label>
+                        <input type="text" id="transEscribir" placeholder="X" maxlength="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="transDireccion">Dirección:</label>
+                        <select id="transDireccion">
+                            <option value="L">Izquierda (L)</option>
+                            <option value="R">Derecha (R)</option>
+                            <option value="S">Permanecer (S)</option>
+                        </select>
+                    </div>
+                    <button onclick="agregarTransicion()">Agregar Transición</button>
+                    <button onclick="limpiarTransiciones()">🧹 Limpiar Transiciones</button>
+
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-title">Transiciones Definidas</div>
+                    <table id="tablaTransiciones">
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Leer</th>
+                                <th>Nuevo Estado</th>
+                                <th>Escribir</th>
+                                <th>Dirección</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Las transiciones se agregarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab2">
+                <div class="panel">
+                    <div class="panel-title">Simulación</div>
+                    <div class="form-group">
+                        <label for="cadenaEntrada">Cadena de entrada:</label>
+                        <input type="text" id="cadenaEntrada" placeholder="Ej: 1010">
+                    </div>
+                    <button onclick="iniciarSimulacion()">Iniciar Simulación</button>
+                    <button onclick="ejecutarPaso()" id="btnPaso" disabled>Ejecutar Paso</button>
+                    <button onclick="detenerSimulacion()" id="btnDetener" disabled>Detener</button>
+                    <button onclick="reiniciarSimulacion()">Reiniciar</button>
+                    <button onclick="limpiarSimulacion()">🧹 Limpiar Simulación</button>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-title">Estado Actual</div>
+                    <div id="estadoActual">No iniciado</div>
+                    <div class="status" id="estadoAceptacion"></div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-title">Cinta</div>
+                    <div class="tape-container" id="cinta">
+                        <!-- La cinta se generará aquí dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-title">Historial de Ejecución</div>
+                    <div class="history-container" id="historial">
+                        <!-- El historial se agregará aquí dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="panel">
+                    <div class="panel-title">Guardar/Cargar Configuración</div>
+                    <button onclick="guardarMaquina()">Guardar Máquina</button>
+                    <button onclick="cargarMaquina()">Cargar Máquina</button>
+                    <input type="file" id="cargarArchivo" accept=".json" style="display: none;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Script.js"></script>
+</body>
+</html>
