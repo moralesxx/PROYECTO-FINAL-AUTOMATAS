@@ -1,0 +1,47 @@
+{
+    "alfabetoEntrada": [
+        "a",
+        "b",
+        "c"
+    ],
+    "alfabetoCinta": [
+        "a",
+        "b",
+        "1",
+        "c",
+        "_"
+    ],
+    "estados": [
+        "q0",
+        "q1"
+    ],
+    "estadoInicial": "q0",
+    "estadosAceptacion": [
+        "q1"
+    ],
+    "transiciones": {
+        "q0": {
+            "a": {
+                "nuevoEstado": "q0",
+                "escribir": "1",
+                "direccion": "R"
+            },
+            "b": {
+                "nuevoEstado": "q0",
+                "escribir": "1",
+                "direccion": "R"
+            },
+            "c": {
+                "nuevoEstado": "q0",
+                "escribir": "1",
+                "direccion": "R"
+            },
+            "_": {
+                "nuevoEstado": "q1",
+                "escribir": "_",
+                "direccion": "S"
+            }
+        }
+    },
+    "simboloBlanco": "_"
+}

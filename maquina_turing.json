@@ -1,0 +1,34 @@
+{
+    "alfabetoEntrada": [
+        "0",
+        "1"
+    ],
+    "alfabetoCinta": [
+        "0",
+        "1",
+        "_"
+    ],
+    "estados": [
+        "q0",
+        "q1"
+    ],
+    "estadoInicial": "q0",
+    "estadosAceptacion": [
+        "q1"
+    ],
+    "transiciones": {
+        "q0": {
+            "1": {
+                "nuevoEstado": "q0",
+                "escribir": "1",
+                "direccion": "R"
+            },
+            "_": {
+                "nuevoEstado": "q1",
+                "escribir": "1",
+                "direccion": "S"
+            }
+        }
+    },
+    "simboloBlanco": "_"
+}
